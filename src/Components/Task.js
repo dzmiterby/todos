@@ -201,6 +201,10 @@ Task.defaultProps = {
   title: '',
   status: true,
   date: new Date(),
+  seconds: 0,
+  timerStatus: false,
+  play: 'icon icon-play',
+  pause: 'icon icon-pause none',
 };
 Task.propTypes = {
   todo: PropTypes.array,
@@ -208,6 +212,10 @@ Task.propTypes = {
   title: PropTypes.string,
   status: PropTypes.bool,
   date: PropTypes.object,
+  seconds: PropTypes.number,
+  timerStatus: PropTypes.bool,
+  play: PropTypes.string,
+  pause: PropTypes.string,
 };
 
 export default Task;
