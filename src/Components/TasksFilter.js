@@ -4,6 +4,11 @@ import PropTypes from 'prop-types';
 
 function TasksFilter({ todo, setFilterTodo, setFilterStatus }) {
   function todoFilter(status, event) {
+    for (let elem of todo) {
+      if (elem.timerStatus === true) {
+        return null;
+      }
+    }
     document.querySelectorAll('.filters button').forEach((elem) => {
       elem.classList.remove('selected');
     });

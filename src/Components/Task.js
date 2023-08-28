@@ -1,15 +1,34 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import { v4 as uuid } from 'uuid';
 import PropTypes from 'prop-types';
 
-function Task({ todo, setTodo, id, title, status, date, setFilterTodo, filterStatus }) {
+function Task({
+  todo,
+  setTodo,
+  id,
+  title,
+  status,
+  date,
+  setFilterTodo,
+  filterStatus,
+  seconds,
+  timerStatus,
+  play,
+  pause,
+}) {
+  const minuteString = String(Math.floor(seconds / 60)).padStart(2, '0');
+  const secondString = String(seconds % 60).padStart(2, '0');
+
   function statusTodo(id, event) {
     if (event.target.checked) {
       let newTodo = todo.filter((item) => {
         if (item.id === id) {
           item.status = !item.status;
+          item.timerStatus = false;
+          item.play = 'icon icon-play';
+          item.pause = 'icon icon-pause none';
         }
         return item;
       });
@@ -36,6 +55,11 @@ function Task({ todo, setTodo, id, title, status, date, setFilterTodo, filterSta
   }
 
   function editTodo(event) {
+    for (let elem of todo) {
+      if (elem.timerStatus === true) {
+        return null;
+      }
+    }
     if (!event.target.parentNode.children[0].checked) {
       event.target.parentNode.parentNode.classList.add('editing');
     }
@@ -55,6 +79,11 @@ function Task({ todo, setTodo, id, title, status, date, setFilterTodo, filterSta
   }
 
   function deleteTodo(id) {
+    for (let elem of todo) {
+      if (elem.timerStatus === true) {
+        return null;
+      }
+    }
     let newTodo = todo.filter((item) => item.id !== id);
     setTodo(newTodo);
     if (filterStatus !== 'all') {
@@ -63,6 +92,47 @@ function Task({ todo, setTodo, id, title, status, date, setFilterTodo, filterSta
     }
   }
 
+  function start() {
+    let newTodo = todo.map((item) => {
+      if (item.id === id) {
+        item.timerStatus = true;
+        item.play = 'icon icon-play none';
+        item.pause = 'icon icon-pause';
+      }
+      return item;
+    });
+    setTodo(newTodo);
+  }
+
+  function stop() {
+    let newTodo = todo.map((item) => {
+      if (item.id === id) {
+        item.timerStatus = false;
+        item.play = 'icon icon-play';
+        item.pause = 'icon icon-pause none';
+      }
+      return item;
+    });
+    setTodo(newTodo);
+  }
+
+  useEffect(() => {
+    if (timerStatus) {
+      const identificator = setInterval(() => {
+        let newTodo = todo.map((item) => {
+          if (item.id === id) {
+            item.seconds = Math.min(seconds++, 3599);
+          }
+          return item;
+        });
+        setTodo(newTodo);
+      }, 1000);
+      return () => {
+        clearInterval(identificator);
+      };
+    }
+  }, [timerStatus]);
+
   return (
     <>
       {status ? (
@@ -70,8 +140,15 @@ function Task({ todo, setTodo, id, title, status, date, setFilterTodo, filterSta
           <div className="view">
             <input className="toggle" type="checkbox" onChange={(event) => statusTodo(id, event)} />
             <label>
-              <span className="description">{title}</span>
-              <span className="created">
+              <span className="title">{title}</span>
+              <span className="description">
+                <button className={play} onClick={start}></button>
+                <button className={pause} onClick={stop}></button>
+                <span>
+                  {minuteString}:{secondString}
+                </span>
+              </span>
+              <span className="description">
                 created{' '}
                 {formatDistanceToNow(date, new Date(), {
                   includeSeconds: true,
@@ -90,8 +167,15 @@ function Task({ todo, setTodo, id, title, status, date, setFilterTodo, filterSta
           <div className="view">
             <input className="toggle" type="checkbox" onChange={(event) => statusTodo(id, event)} defaultChecked />
             <label>
-              <span className="description">{title}</span>
-              <span className="created">
+              <span className="title">{title}</span>
+              <span className="description">
+                <button className={play} onClick={() => null}></button>
+                <button className={pause} onClick={() => null}></button>
+                <span>
+                  {minuteString}:{secondString}
+                </span>
+              </span>
+              <span className="description">
                 created{' '}
                 {formatDistanceToNow(date, new Date(), {
                   includeSeconds: true,

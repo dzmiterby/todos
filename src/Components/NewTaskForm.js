@@ -13,6 +13,10 @@ function NewTaskForm({ todo, setTodo, filterStatus, setFilterTodo }) {
           title: event.target.value,
           status: true,
           date: new Date(),
+          seconds: 0,
+          timerStatus: false,
+          play: 'icon icon-play',
+          pause: 'icon icon-pause none',
         },
       ]);
       if (setFilterTodo !== 'all') {
@@ -23,6 +27,10 @@ function NewTaskForm({ todo, setTodo, filterStatus, setFilterTodo }) {
             title: event.target.value,
             status: true,
             date: new Date(),
+            seconds: 0,
+            timerStatus: false,
+            play: 'icon icon-play',
+            pause: 'icon icon-pause none',
           },
         ].filter((item) => item.status === filterStatus);
         setFilterTodo(newFilterTodo);

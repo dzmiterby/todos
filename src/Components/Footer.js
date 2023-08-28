@@ -8,6 +8,11 @@ function Footer({ todo, setTodo, setFilterTodo, filterStatus, setFilterStatus })
   let activeTask = todo.filter((item) => item.status === true);
 
   function clearCompleted() {
+    for (let elem of todo) {
+      if (elem.timerStatus === true) {
+        return null;
+      }
+    }
     let newTodo = todo.filter((item) => item.status === true);
     setTodo(newTodo);
     if (filterStatus !== 'all') {

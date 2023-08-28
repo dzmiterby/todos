@@ -18,6 +18,10 @@ function TaskList({ filterTodo, setFilterTodo, todo, setTodo, filterStatus }) {
           date={item.date}
           setFilterTodo={setFilterTodo}
           filterStatus={filterStatus}
+          seconds={item.seconds}
+          timerStatus={item.timerStatus}
+          play={item.play}
+          pause={item.pause}
         />
       ))}
     </ul>

@@ -7,7 +7,6 @@ import Footer from './Footer';
 
 function App() {
   const [todo, setTodo] = useState([]);
-
   const [filterStatus, setFilterStatus] = useState('all');
   const [filterTodo, setFilterTodo] = useState(todo);
 
