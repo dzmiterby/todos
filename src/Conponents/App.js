@@ -1,24 +1,25 @@
 import React from 'react';
+
 import './App.css';
+
+import { v4 as uuid } from 'uuid';
+
 import NewTaskForm from './NewTaskForm';
 import TaskList from './TaskList';
 import Footer from './Footer';
 
-import { v4 as uuid } from 'uuid';
-
 class App extends React.Component {
-
   constructor() {
     super();
     this.state = {
       todo: [],
       filterStatus: 'all',
       filterTodo: [],
-      timerId: 0
+      timerId: 0,
     }
-  }
+  };
 
-  // Добавление задачи
+// Добавление задачи
   saveTodo = (event) => {
     if (event.key === 'Enter' && event.target.value.trim() !== '') {
       let uid = uuid();
@@ -65,14 +66,14 @@ class App extends React.Component {
           },
         ].filter((item) => item.status === this.state.filterStatus);
         this.setState({
-          filterTodo: newFilterTodo
+          filterTodo: newFilterTodo,
         });
       }
       event.target.value = '';
     }
-  }
+  };
 
-  // Фильтры
+// Фильтры
   todoFilter = (status, event) => {
     for (let elem of this.state.todo) {
       if (elem.timerStatus === true) {
@@ -83,18 +84,18 @@ class App extends React.Component {
       elem.classList.remove('selected');
     });
     if (status === 'all') {
-        this.setState({
-          filterTodo: this.state.todo,
-          filterStatus: status
-        });
+      this.setState({
+        filterTodo: this.state.todo,
+        filterStatus: status,
+      });
         event.target.classList.add('selected');
     } else {
-        let newTodo = this.state.todo.filter((item) => item.status === status);
-        this.setState({
-          filterTodo: newTodo,
-          filterStatus: status
-        });
-        event.target.classList.add('selected');
+      let newTodo = this.state.todo.filter((item) => item.status === status);
+      this.setState({
+        filterTodo: newTodo,
+        filterStatus: status,
+      });
+      event.target.classList.add('selected');
     }
   }
 
@@ -108,17 +109,17 @@ class App extends React.Component {
     let newTodo = this.state.todo.filter((item) => item.status === true);
     this.setState({
       todo: newTodo,
-      filterTodo: newTodo
+      filterTodo: newTodo,
     });
     if (this.state.filterStatus !== 'all') {
       let newFilterTodo = newTodo.filter((item) => item.status === this.state.filterStatus);
       this.setState({
-        filterTodo: newFilterTodo
+        filterTodo: newFilterTodo,
       });
     }
-  }
+  };
 
-  // Изменение статуса задачи active/completed
+// Изменение статуса задачи active/completed
   statusTodo = (id, event) => {
     if (event.target.checked) {
       let newTodo = this.state.todo.filter((item) => {
@@ -129,12 +130,12 @@ class App extends React.Component {
       });
       this.setState({
         todo: newTodo,
-        filterTodo: newTodo
+        filterTodo: newTodo,
       });
       if (this.state.filterStatus !== 'all') {
         let newFilterTodo = this.state.todo.filter((item) => item.status === this.state.filterStatus);
         this.setState({
-          filterTodo: newFilterTodo
+          filterTodo: newFilterTodo,
         });
       }
       event.target.parentNode.parentNode.classList.add('completed');
@@ -147,19 +148,19 @@ class App extends React.Component {
       });
       this.setState({
         todo: newTodo,
-        filterTodo: newTodo
+        filterTodo: newTodo,
       });
       if (this.state.filterStatus !== 'all') {
-          let newFilterTodo = this.state.todo.filter((item) => item.status === this.state.filterStatus);
-          this.setState({
-            filterTodo: newFilterTodo
-          });
+        let newFilterTodo = this.state.todo.filter((item) => item.status === this.state.filterStatus);
+        this.setState({
+          filterTodo: newFilterTodo,
+        });
       }
       event.target.parentNode.parentNode.classList.remove('completed');
     }
-  }
+  };
   
-  // Редактирование задачи
+// Редактирование задачи
   editTodo = (event) => {
     for (let elem of this.state.todo) {
       if (elem.timerStatus === true) {
@@ -169,7 +170,7 @@ class App extends React.Component {
     if (!event.target.parentNode.children[0].checked) {
       event.target.parentNode.parentNode.classList.add('editing');
     }
-  }
+  };
 
   changeTodo = (id, event) => {
     if (event.key === 'Enter') {
@@ -181,11 +182,11 @@ class App extends React.Component {
       });
       this.setState({
         todo: newTodo,
-        filterTodo: newTodo
+        filterTodo: newTodo,
       });
       event.target.parentNode.classList.remove('editing');
     }
-  }
+  };
 
   // Удаление задачи
   deleteTodo = (id) => {
@@ -197,15 +198,15 @@ class App extends React.Component {
     let newTodo = this.state.todo.filter((item) => item.id !== id);
     this.setState({
       todo: newTodo,
-      filterTodo: newTodo
+      filterTodo: newTodo,
     });
     if (this.state.filterStatus !== 'all') {
       let newFilterTodo = newTodo.filter((item) => item.status === this.state.filterStatus);
       this.setState({
-        filterTodo: newFilterTodo
+        filterTodo: newFilterTodo,
       });
     }
-  }
+  };
 
   // Запуск таймера
   start = (id) => {
@@ -224,7 +225,7 @@ class App extends React.Component {
     });
     this.setState({
       todo: newTodo,
-      filterTodo: newTodo
+      filterTodo: newTodo,
     });
     let ident = setInterval(() => {
       let newTodo = this.state.todo.map((item) => {
@@ -237,13 +238,13 @@ class App extends React.Component {
       });
       this.setState({
         todo: newTodo,
-        filterTodo: newTodo
+        filterTodo: newTodo,
       });
     }, 1000);
     this.setState({
-      timerId: ident
+      timerId: ident,
     });
-  }
+  };
 
   // Остановка таймера
   stop = (id) => {
@@ -257,10 +258,10 @@ class App extends React.Component {
     });
     this.setState({
       todo: newTodo,
-      filterTodo: newTodo
+      filterTodo: newTodo,
     });
     clearInterval(this.state.timerId);
-  }
+  };
 
   render() {
     return (
