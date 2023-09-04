@@ -1,5 +1,4 @@
 import React from 'react';
-
 import './App.css';
 
 import { v4 as uuid } from 'uuid';
@@ -16,10 +15,10 @@ class App extends React.Component {
       filterStatus: 'all',
       filterTodo: [],
       timerId: 0,
-    }
-  };
+    };
+  }
 
-// Добавление задачи
+  // Добавление задачи
   saveTodo = (event) => {
     if (event.key === 'Enter' && event.target.value.trim() !== '') {
       let uid = uuid();
@@ -49,7 +48,7 @@ class App extends React.Component {
             play: 'icon icon-play',
             pause: 'icon icon-pause none',
           },
-        ]
+        ],
       });
       if (this.state.filterStatus !== 'all') {
         let newFilterTodo = [
@@ -73,7 +72,7 @@ class App extends React.Component {
     }
   };
 
-// Фильтры
+  // Фильтры
   todoFilter = (status, event) => {
     for (let elem of this.state.todo) {
       if (elem.timerStatus === true) {
@@ -88,7 +87,7 @@ class App extends React.Component {
         filterTodo: this.state.todo,
         filterStatus: status,
       });
-        event.target.classList.add('selected');
+      event.target.classList.add('selected');
     } else {
       let newTodo = this.state.todo.filter((item) => item.status === status);
       this.setState({
@@ -97,7 +96,7 @@ class App extends React.Component {
       });
       event.target.classList.add('selected');
     }
-  }
+  };
 
   // Удаление выполненных задач
   clearCompleted = () => {
@@ -119,7 +118,7 @@ class App extends React.Component {
     }
   };
 
-// Изменение статуса задачи active/completed
+  // Изменение статуса задачи active/completed
   statusTodo = (id, event) => {
     if (event.target.checked) {
       let newTodo = this.state.todo.filter((item) => {
@@ -160,7 +159,7 @@ class App extends React.Component {
     }
   };
   
-// Редактирование задачи
+  // Редактирование задачи
   editTodo = (event) => {
     for (let elem of this.state.todo) {
       if (elem.timerStatus === true) {
@@ -273,20 +272,34 @@ class App extends React.Component {
         />
         <section className="main">
           <TaskList
+
             filterTodo={this.state.filterTodo}
+
             statusTodo={this.statusTodo}
+
             editTodo={this.editTodo}
+
             deleteTodo={this.deleteTodo}
+
             changeTodo={this.changeTodo}
+
             start={this.start}
+
             stop={this.stop}
+
             todo={this.state.todo}
+
             changeStates={this.changeStates}
+
           />
           <Footer
+
             todo={this.state.todo}
+
             todoFilter={this.todoFilter}
+
             clearCompleted={this.clearCompleted}
+
           />
         </section>
       </section>
