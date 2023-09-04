@@ -15,8 +15,8 @@ class App extends React.Component {
       filterStatus: 'all',
       filterTodo: [],
       timerId: 0,
-    };
-  }
+    }
+  };
 
   // Добавление задачи
   saveTodo = (event) => {
@@ -265,42 +265,11 @@ class App extends React.Component {
   render() {
     return (
       <section className="todoapp">
-        <NewTaskForm
-          saveTodo={this.saveTodo}
-          clearCompleted={this.clearCompleted}
-          todo={this.state.todo}
+        <NewTaskForm saveTodo={this.saveTodo} clearCompleted={this.clearCompleted} todo={this.state.todo}
         />
         <section className="main">
-          <TaskList
-
-            filterTodo={this.state.filterTodo}
-
-            statusTodo={this.statusTodo}
-
-            editTodo={this.editTodo}
-
-            deleteTodo={this.deleteTodo}
-
-            changeTodo={this.changeTodo}
-
-            start={this.start}
-
-            stop={this.stop}
-
-            todo={this.state.todo}
-
-            changeStates={this.changeStates}
-
-          />
-          <Footer
-
-            todo={this.state.todo}
-
-            todoFilter={this.todoFilter}
-
-            clearCompleted={this.clearCompleted}
-
-          />
+          <TaskList filterTodo={this.state.filterTodo} statusTodo={this.statusTodo} editTodo={this.editTodo} deleteTodo={this.deleteTodo} changeTodo={this.changeTodo} start={this.start} stop={this.stop} todo={this.state.todo} changeStates={this.changeStates} />
+          <Footer todo={this.state.todo} todoFilter={this.todoFilter} clearCompleted={this.clearCompleted} />
         </section>
       </section>
     );
