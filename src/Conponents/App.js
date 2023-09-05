@@ -1,3 +1,4 @@
+/* eslint import/order: ["error", {"newlines-between": "always-and-inside-groups"}] */
 import React from 'react';
 import './App.css';
 
