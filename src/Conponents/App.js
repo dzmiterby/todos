@@ -17,7 +17,6 @@ class App extends React.Component {
       timerId: 0,
     };
   }
-
   // Добавление задачи
   saveTodo = (event) => {
     if (event.key === 'Enter' && event.target.value.trim() !== '') {
