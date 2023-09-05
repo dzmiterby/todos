@@ -46,6 +46,7 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@ianvs/prettier-plugin-sort-imports": "^4.1.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^8.48.0",
     "eslint-config-airbnb": "^19.0.4",
